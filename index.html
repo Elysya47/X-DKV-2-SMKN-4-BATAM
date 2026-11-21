@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X DKV 2 - Mint Choco Edition</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mint: {
+                            light: '#E2F4EE',
+                            DEFAULT: '#A3D9C9',
+                            dark: '#68B69E',
+                        },
+                        choco: {
+                            light: '#D4B59D',
+                            DEFAULT: '#5C4033',
+                            dark: '#3D281D',
+                        },
+                        cream: {
+                            light: '#FAF6EE',
+                            DEFAULT: '#F5EBE6',
+                            dark: '#EAD5C9',
+                        }
+                    },
+                    fontFamily: {
+                        cursive: ['"Pacifico"', 'cursive'],
+                        sans: ['"Quicksand"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Polkadot Mint Background Pattern */
+        .bg-polkadot-light {
+            background-color: #E2F4EE;
+            background-image: radial-gradient(#5C4033 15%, transparent 16%), radial-gradient(#5C4033 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        /* Polkadot Choco Background Pattern for Dark Mode */
+        .bg-polkadot-dark {
+            background-color: #3D281D;
+            background-image: radial-gradient(#A3D9C9 15%, transparent 16%), radial-gradient(#A3D9C9 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5EBE6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A3D9C9;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #68B69E;
+        }
+        /* Vinyl Spin Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        /* Click Ripple Effect Style */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-effect 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-effect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-polkadot-light dark:bg-polkadot-dark text-choco dark:text-cream font-sans min-h-screen transition-colors duration-300 relative">
+
+    <!-- START / LANDING SECTION -->
+    <section id="start-section" class="min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden z-20 bg-polkadot-light dark:bg-polkadot-dark">
+        <!-- Aesthetic Chocolate Ribbon Decoration -->
+        <div class="absolute top-6 flex items-center justify-center animate-bounce">
+            <div class="bg-choco text-cream px-8 py-2 rounded-full shadow-lg border-2 border-mint text-sm md:text-base font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-cookie-bite text-mint"></i> Desain Komunikasi Visual <i class="fa-solid fa-cookie-bite text-mint"></i>
+            </div>
+        </div>
+
+        <div class="bg-cream/90 dark:bg-choco-dark/90 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-2xl border-4 border-mint text-center max-w-xl w-full relative mt-10 transition-all duration-300 transform hover:scale-[1.01]">
+            <!-- Ribbon decoration on card -->
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-choco text-mint px-6 py-1 rounded-full shadow-md text-xs font-bold tracking-widest border border-mint-light">
+                ✦ SWEET MINTIES ✦
+            </div>
+
+            <h1 class="font-cursive text-5xl md:text-7xl text-choco dark:text-mint mt-4 mb-2 drop-shadow-sm">
+                X DKV 2
+            </h1>
+            <p class="text-sm md:text-base text-choco/80 dark:text-cream/80 font-medium mb-6">
+                SMK Negeri 4 Batam • Tahun Ajaran 2026/2027
+            </p>
+            <p class="italic text-xs md:text-sm text-choco-dark dark:text-mint-light bg-mint/30 dark:bg-choco/50 py-2 px-4 rounded-xl mb-8 border border-mint">
+                "Art is us, design is our soul."
+            </p>
+
+            <button onclick="enterWebsite()" class="w-full bg-choco hover:bg-choco-dark text-cream font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3 text-lg border-2 border-mint">
+                <i class="fa-solid fa-door-open text-mint"></i> START TO WEBSITE <i class="fa-solid fa-arrow-right text-mint"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- MAIN APP CONTAINER (Hidden until Start is clicked) -->
+    <div id="main-app" class="hidden">
+        <!-- NAVBAR -->
+        <nav class="sticky top-0 z-50 bg-mint/90 dark:bg-choco-dark/90 backdrop-blur-md border-b-2 border-choco/20 shadow-md transition-colors duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Brand -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-choco flex items-center justify-center text-mint font-cursive text-xl shadow">
+                            Ch
+                        </div>
+                        <span class="font-cursive text-xl text-choco dark:text-mint font-bold">X DKV 2</span>
+                    </div>
+
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex items-center gap-2 text-sm font-semibold">
+                        <a href="#beranda" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Beranda</a>
+                        <a href="#anggota" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Anggota</a>
+                        <a href="#struktur" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Struktur</a>
+                        <a href="#jadwal" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Jadwal Mapel</a>
+                        <a href="#piket" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Piket</a>
+                        <a href="#uangkas" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Uang Kas</a>
+                        <a href="#absensi" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Absensi</a>
+                        <a href="#playlist" class="px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 transition">Playlist</a>
+                    </div>
+
+                    <!-- Actions (Dark Mode & Admin Login) -->
+                    <div class="flex items-center gap-3">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-cream dark:bg-choco text-choco dark:text-mint shadow hover:scale-110 transition" title="Ganti Tema">
+                            <i id="theme-icon" class="fa-solid fa-moon"></i>
+                        </button>
+                        <button onclick="openAdminModal()" id="admin-btn-status" class="bg-choco hover:bg-choco-dark text-mint px-4 py-2 rounded-xl text-xs font-bold shadow transition flex items-center gap-2 border border-mint">
+                            <i class="fa-solid fa-user-shield"></i> <span id="admin-btn-text">LOGIN ADMIN</span>
+                        </button>
+                        <!-- Mobile menu button -->
+                        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-choco text-mint">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden lg:hidden bg-mint dark:bg-choco-dark border-t border-choco/10 px-4 pt-2 pb-4 space-y-2">
+                <a href="#beranda" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Beranda</a>
+                <a href="#anggota" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Daftar Anggota</a>
+                <a href="#struktur" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Struktur Kelas</a>
+                <a href="#jadwal" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Jadwal Pelajaran</a>
+                <a href="#piket" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Jadwal Piket</a>
+                <a href="#uangkas" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Uang Kas</a>
+                <a href="#absensi" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Absensi</a>
+                <a href="#playlist" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-xl hover:bg-choco/10 dark:hover:bg-mint/10 font-medium">Playlist Fav Song</a>
+            </div>
+        </nav>
+
+        <!-- 1. BERANDA SECTION -->
+        <section id="beranda" class="max-w-7xl mx-auto px-4 py-12 space-y-12">
+            <div class="bg-cream dark:bg-choco-dark rounded-3xl p-8 md:p-12 shadow-xl border-4 border-mint text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-choco dark:text-mint">
+                    <i class="fa-solid fa-palette"></i>
+                </div>
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Welcome to Our Class
+                </span>
+                <h2 class="font-cursive text-4xl md:text-6xl text-choco dark:text-mint mt-4 mb-2">
+                    Kelas X DKV 2
+                </h2>
+                <p class="text-lg md:text-xl font-semibold text-choco/80 dark:text-cream/80 mb-6">
+                    SMK Negeri 4 Batam • 2026/2027
+                </p>
+                <p class="max-w-2xl mx-auto italic text-choco/90 dark:text-cream/90 bg-mint/20 dark:bg-choco p-4 rounded-2xl border border-mint mb-8">
+                    "Satu Visi, Satu Kreasi, X DKV 2 Pasti Bersinar di Dunia Desain Komunikasi Visual!"
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="scrollToSection('anggota')" class="bg-choco hover:bg-choco-dark text-mint font-bold px-6 py-3 rounded-2xl shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i> Lihat Jumlah Siswa (35)
+                    </button>
+                    <div class="bg-mint text-choco font-bold px-6 py-3 rounded-2xl shadow-md flex items-center gap-2 border border-choco/20">
+                        <i class="fa-solid fa-wallet"></i> Saldo Kas: <span id="display-saldo-kas">Rp 760.000</span>
+                    </div>
+                </div>
+            </div>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec"
+>               <input name="SaldoKas" type="number" placeholder="Masukkan Saldo Kas Baru" required>
+                <button type="submit">Send</button>
+            </form>
+
+            <!-- Tentang Kelas & Pemasukan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Tentang Kelas Card -->
+                <div class="bg-cream dark:bg-choco-dark rounded-3xl p-8 shadow-xl border-2 border-mint">
+                    <h3 class="font-cursive text-2xl text-choco dark:text-mint mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-mint"></i> Tentang Kelas
+                    </h3>
+                    <ul class="space-y-3 text-sm font-medium">
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Nama Kelas:</span>
+                            <span class="font-bold">X DKV 2</span>
+                        </li>
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Jurusan:</span>
+                            <span class="font-bold">Desain Komunikasi Visual (DKV)</span>
+                        </li>
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Sekolah:</span>
+                            <span class="font-bold">SMK Negeri 4 Batam</span>
+                        </li>
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Tahun Ajaran:</span>
+                            <span class="font-bold">2026/2027</span>
+                        </li>
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Wali Kelas:</span>
+                            <span class="font-bold">Rizka Septialis S.pd</span>
+                        </li>
+                        <li class="flex justify-between border-b border-choco/10 pb-2">
+                            <span class="opacity-80">Jumlah Siswa:</span>
+                            <span class="font-bold">35 Orang (Perempuan: 21, Laki-Laki: 14)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pemasukan & Admin Edit Saldo -->
+                <div class="bg-cream dark:bg-choco-dark rounded-3xl p-8 shadow-xl border-2 border-mint flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-cursive text-2xl text-choco dark:text-mint mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-coins text-mint"></i> Keuangan Kelas
+                        </h3>
+                        <p class="text-sm opacity-80 mb-4">Informasi ringkas pemasukan kas kelas X DKV 2 periode berjalan.</p>
+                        <div class="bg-mint/30 dark:bg-choco p-4 rounded-2xl mb-4 border border-mint">
+                            <div class="text-xs font-semibold opacity-75">PEMASUKAN KELAS (ESTIMASI)</div>
+                            <div class="text-2xl font-bold text-choco dark:text-mint">Rp 20.000 / Bulan</div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Edit Saldo Kas (Hanya muncul jika admin) -->
+                    <div id="admin-saldo-box" class="hidden bg-choco/10 dark:bg-mint/10 p-4 rounded-2xl border border-choco/30 mt-4">
+                        <h4 class="text-xs font-bold uppercase mb-2 text-choco dark:text-mint"><i class="fa-solid fa-pen-to-square"></i> Edit Saldo Kas (Admin Only)</h4>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-saldo-kas" placeholder="Contoh: Rp 800.000" class="flex-1 px-3 py-2 rounded-xl bg-cream dark:bg-choco text-xs border border-choco/20">
+                            <button onclick="updateSaldoKas()" class="bg-choco text-mint px-4 py-2 rounded-xl text-xs font-bold hover:bg-choco-dark">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DAFTAR ANGGOTA KELAS SECTION -->
+        <section id="anggota" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Our Sweet Family
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Daftar Anggota Kelas (35 Siswa)
+                </h2>
+                <p class="text-sm opacity-85 max-w-xl mx-auto">Klik pada card siswa untuk melihat biodata lengkap. Admin dapat mengedit atau menambah data siswa di bagian bawah.</p>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <div class="flex flex-col md:flex-row gap-4 justify-between items-center bg-cream dark:bg-choco-dark p-4 rounded-2xl shadow-md border border-mint">
+                <div class="relative w-full md:w-96">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-choco/50 dark:text-mint/50">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="search-siswa" onkeyup="filterSiswa()" placeholder="Cari nama siswa..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-mint/20 dark:bg-choco text-sm border border-choco/20 focus:outline-none focus:ring-2 focus:ring-mint">
+                </div>
+                <div class="text-xs font-semibold opacity-80">
+                    Total: <span id="total-siswa-count">35</span> Siswa
+                </div>
+            </div>
+
+            <!-- Students Card Grid -->
+            <div id="siswa-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Card items generated dynamically via JavaScript -->
+            </div>
+
+            <!-- Admin Add New Student Box -->
+            <div id="admin-add-siswa-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4 mt-8">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-user-plus"></i> Tambah Anggota Kelas Baru (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <input type="text" id="new-nama" placeholder="Nama Lengkap" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <input type="text" id="new-panggilan" placeholder="Nama Panggilan" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <input type="text" id="new-nis" placeholder="NIS/NISN" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <select id="new-gender" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="L">Laki-Laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                    <input type="text" id="new-jabatan" placeholder="Jabatan/Peran (Opsional)" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <button onclick="addNewSiswa()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Tambah Siswa</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. STRUKTUR KELAS SECTION -->
+        <section id="struktur" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Organization
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Struktur Kelas X DKV 2
+                </h2>
+                <p class="text-sm opacity-85">Pengurus kelas yang siap membimbing dan mengatur kelas dengan penuh tanggung jawab.</p>
+            </div>
+
+            <div id="struktur-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Struktur cards rendered via JS -->
+            </div>
+
+            <!-- Admin Edit Struktur Box -->
+            <div id="admin-struktur-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-pen-to-square"></i> Edit Pengurus Kelas (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <select id="edit-strukt-id" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="walas">Wali Kelas</option>
+                        <option value="ketua">Ketua Kelas</option>
+                        <option value="wakil">Wakil Ketua</option>
+                        <option value="sekretaris">Sekretaris</option>
+                        <option value="bendahara">Bendahara</option>
+                        <option value="kebersihan">Seksi Kebersihan</option>
+                        <option value="keamanan">Seksi Keamanan</option>
+                    </select>
+                    <input type="text" id="edit-strukt-val" placeholder="Nama / Pejabat Baru" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <button onclick="updateStruktur()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Perbarui Pengurus</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. JADWAL PELAJARAN SECTION -->
+        <section id="jadwal" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Timetable
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Jadwal Pelajaran
+                </h2>
+                <div class="flex justify-center gap-4 mt-4">
+                    <button onclick="switchJadwal('ganjil')" id="btn-ganjil" class="px-6 py-2 rounded-xl font-bold bg-choco text-mint shadow transition">Minggu Ganjil</button>
+                    <button onclick="switchJadwal('genap')" id="btn-genap" class="px-6 py-2 rounded-xl font-bold bg-mint/40 text-choco dark:text-mint shadow transition">Minggu Genap</button>
+                </div>
+            </div>
+
+            <!-- Jadwal Display Table/Card Container -->
+            <div id="jadwal-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Generated by JS -->
+            </div>
+
+            <!-- Admin Edit Jadwal Box -->
+            <div id="admin-jadwal-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-calendar-plus"></i> Tambah / Edit Mata Pelajaran (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                    <select id="jadwal-minggu-edit" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="ganjil">Minggu Ganjil</option>
+                        <option value="genap">Minggu Genap</option>
+                    </select>
+                    <select id="jadwal-hari-edit" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jumat">Jumat</option>
+                    </select>
+                    <input type="text" id="jadwal-mapel-edit" placeholder="Jam & Nama Pelajaran (Cth: Jam 2-3: MTK - Bu Anah)" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20 md:col-span-2">
+                    <button onclick="addJadwalMapel()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow md:col-span-4">Tambahkan ke Jadwal</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. JADWAL PIKET SECTION -->
+        <section id="piket" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Cleaning Duty
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Jadwal Piket Kelas
+                </h2>
+                <p class="text-sm opacity-85">Gotong royong menjaga kebersihan kelas X DKV 2 setiap hari.</p>
+            </div>
+
+            <div id="piket-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- Generated by JS -->
+            </div>
+
+            <!-- Admin Edit Piket Box -->
+            <div id="admin-piket-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-broom"></i> Tambah Petugas Piket (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <select id="piket-hari-edit" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="Senin">Senin</option>
+                        <option value="Selasa">Selasa</option>
+                        <option value="Rabu">Rabu</option>
+                        <option value="Kamis">Kamis</option>
+                        <option value="Jumat">Jumat</option>
+                    </select>
+                    <input type="text" id="piket-nama-edit" placeholder="Nama Siswa Petugas Piket" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <button onclick="addPiketSiswa()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Tambah Petugas</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. UANG KAS SECTION -->
+        <section id="uangkas" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Class Treasury
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Uang Kas Kelas
+                </h2>
+                <p class="text-sm opacity-85">Iuran wajib Rp 20.000 / bulan. Klik nama bulan untuk melihat rekap pembayaran.</p>
+            </div>
+
+            <!-- Month Selector Bar -->
+            <div class="flex overflow-x-auto gap-2 py-2 px-1 bg-cream dark:bg-choco-dark p-4 rounded-2xl shadow-md border border-mint" id="month-tabs">
+                <!-- Generated by JS: Juli s.d. Juni -->
+            </div>
+
+            <!-- Kas Table -->
+            <div class="bg-cream dark:bg-choco-dark rounded-3xl p-6 shadow-xl border-2 border-mint overflow-x-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg text-choco dark:text-mint" id="current-month-title">Bulan: Juli</h3>
+                    <input type="text" id="search-kas" onkeyup="filterKas()" placeholder="Cari siswa di kas..." class="px-4 py-2 rounded-xl bg-mint/20 dark:bg-choco text-xs border border-choco/20">
+                </div>
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-choco/20 text-xs uppercase text-choco dark:text-mint">
+                            <th class="py-3 px-4">No</th>
+                            <th class="py-3 px-4">Nama Siswa</th>
+                            <th class="py-3 px-4">Nominal Bayar</th>
+                            <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4 text-center admin-only-col hidden">Aksi Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kas-table-body" class="text-sm">
+                        <!-- Generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Admin Edit Kas Box -->
+            <div id="admin-kas-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-hand-holding-dollar"></i> Input / Update Pembayaran Kas (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                    <select id="kas-edit-siswa" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <!-- Student options -->
+                    </select>
+                    <select id="kas-edit-bulan" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <!-- Month options -->
+                    </select>
+                    <input type="number" id="kas-edit-nominal" placeholder="Jumlah Bayar (Cth: 20000)" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <button onclick="updateKasData()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Simpan Pembayaran</button>
+                </div>
+            </div>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec"
+>              <input name="NamaSiswa" type="text" placeholder="Nama Siswa" required>
+               <input name="Bulan" type="text" placeholder="Bulan (Cth: November)" required>
+               <input name="NominalBayar" type="number" placeholder="Nominal Bayar (Cth: 20000)" required>
+               <input name="Status" type="text" placeholder="Status (Lunas / Belum)" required>
+               <button type="submit">Send</button>
+            </form>
+        </section>
+
+        <!-- 7. ABSENSI SECTION -->
+        <section id="absensi" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Attendance
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Absensi Siswa X DKV 2
+                </h2>
+                <p class="text-sm opacity-85">Rekap kehadiran siswa dari nomor 1 sampai 35.</p>
+            </div>
+
+            <!-- Absensi Table -->
+            <div class="bg-cream dark:bg-choco-dark rounded-3xl p-6 shadow-xl border-2 border-mint overflow-x-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg text-choco dark:text-mint">Tabel Absensi Harian</h3>
+                    <input type="text" id="search-absen" onkeyup="filterAbsen()" placeholder="Cari nama..." class="px-4 py-2 rounded-xl bg-mint/20 dark:bg-choco text-xs border border-choco/20">
+                </div>
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-choco/20 text-xs uppercase text-choco dark:text-mint">
+                            <th class="py-3 px-4">No</th>
+                            <th class="py-3 px-4">Nama Siswa</th>
+                            <th class="py-3 px-4">Kehadiran (Hadir / Sakit / Izin / Alfa / Telat)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="absen-table-body" class="text-sm">
+                        <!-- Generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Admin Input Kehadiran Box -->
+            <div id="admin-absen-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-clipboard-user"></i> Isi Kehadiran / Absensi (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                    <select id="absen-edit-siswa" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <!-- Students -->
+                    </select>
+                    <input type="date" id="absen-edit-tgl" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <select id="absen-edit-status" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <option value="Hadir">Hadir</option>
+                        <option value="Sakit">Sakit</option>
+                        <option value="Izin">Izin</option>
+                        <option value="Alfa">Alfa</option>
+                        <option value="Telat">Telat</option>
+                    </select>
+                    <button onclick="updateAbsenData()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Simpan Absen</button>
+                </div>
+            </div>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec">
+                <input name="NamaSiswa" type="text" placeholder="Nama Siswa" required>
+                <select name="Status" required>
+                  <option value="Hadir">Hadir</option>
+                  <option value="Sakit">Sakit</option>
+                  <option value="Izin">Izin</option>
+                  <option value="Alfa">Alfa</option>
+            </select>
+            <button type="submit">Kirim Absen</button>
+           </form>
+        </section>
+
+        <!-- 8. PLAYLIST FAV SONG SECTION -->
+        <section id="playlist" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+            <div class="text-center">
+                <span class="bg-mint text-choco px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm">
+                    Music & Vibe
+                </span>
+                <h2 class="font-cursive text-4xl md:text-5xl text-choco dark:text-mint mt-2 mb-4">
+                    Playlist Fav Song X DKV 2
+                </h2>
+                <p class="text-sm opacity-85">Lagu kesukaan seluruh anggota kelas X DKV 2.</p>
+            </div>
+
+            <!-- Spinning Vinyl CD Animation Banner -->
+            <div class="bg-cream dark:bg-choco-dark rounded-3xl p-8 shadow-xl border-2 border-mint flex flex-col md:flex-row items-center gap-8 justify-around">
+                <div class="relative w-40 h-40 flex items-center justify-center">
+                    <div class="absolute w-40 h-40 rounded-full bg-choco border-4 border-mint shadow-2xl animate-spin-slow flex items-center justify-center">
+                        <div class="absolute w-12 h-12 rounded-full bg-mint border-4 border-choco flex items-center justify-center">
+                            <div class="w-3 h-3 rounded-full bg-choco"></div>
+                        </div>
+                        <div class="absolute w-full h-0.5 bg-mint/30"></div>
+                        <div class="absolute h-full w-0.5 bg-mint/30"></div>
+                    </div>
+                </div>
+                <div class="text-center md:text-left space-y-2">
+                    <h3 class="font-cursive text-3xl text-choco dark:text-mint">Mint Choco Melodies</h3>
+                    <p class="text-sm opacity-80 max-w-md">Musik adalah teman terbaik dalam mendesain. Nikmati daftar lagu pilihan dari 35 siswa X DKV 2 yang penuh warna!</p>
+                </div>
+            </div>
+
+            <!-- Playlist Grid/Table -->
+            <div class="bg-cream dark:bg-choco-dark rounded-3xl p-6 shadow-xl border-2 border-mint overflow-x-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg text-choco dark:text-mint">Daftar Lagu Kesukaan Siswa</h3>
+                    <input type="text" id="search-playlist" onkeyup="filterPlaylist()" placeholder="Cari lagu / siswa..." class="px-4 py-2 rounded-xl bg-mint/20 dark:bg-choco text-xs border border-choco/20">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="playlist-grid">
+                    <!-- Generated by JS -->
+                </div>
+            </div>
+
+            <!-- Admin Edit Playlist Box -->
+            <div id="admin-playlist-box" class="hidden bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-4">
+                <h3 class="font-cursive text-xl text-choco dark:text-mint"><i class="fa-solid fa-music"></i> Edit Lagu Kesukaan (Admin Only)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <select id="playlist-edit-siswa" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                        <!-- Students -->
+                    </select>
+                    <input type="text" id="playlist-edit-lagu" placeholder="Judul Lagu & Artis Favorit" class="p-3 rounded-xl bg-mint/20 dark:bg-choco border border-choco/20">
+                    <button onclick="updatePlaylistData()" class="bg-choco text-mint font-bold p-3 rounded-xl hover:bg-choco-dark shadow">Simpan Lagu</button>
+                </div>
+            </div>
+            <form method="POST" action="https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec">
+              <input name="NamaSiswa" type="text" placeholder="Nama Siswa" required>
+              <input name="JudulLagu" type="text" placeholder="Judul Lagu" required>
+              <button type="submit">Kirim</button>
+            </form>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-choco dark:bg-choco-dark text-cream py-12 px-4 mt-20 border-t-4 border-mint">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div class="space-y-3">
+                    <h3 class="font-cursive text-3xl text-mint">X DKV 2</h3>
+                    <p class="text-xs opacity-80">SMK Negeri 4 Batam • Tahun Ajaran 2026/2027</p>
+                    <p class="text-xs italic opacity-75">"Art is us, design is our soul."</p>
+                </div>
+                <div class="space-y-2 text-xs">
+                    <h4 class="font-bold uppercase tracking-wider text-mint mb-2">Navigasi Cepat</h4>
+                    <p><a href="#beranda" class="hover:underline">Beranda</a></p>
+                    <p><a href="#anggota" class="hover:underline">Daftar Anggota</a></p>
+                    <p><a href="#struktur" class="hover:underline">Struktur Kelas</a></p>
+                    <p><a href="#jadwal" class="hover:underline">Jadwal Pelajaran</a></p>
+                </div>
+                <div class="space-y-2 text-xs flex flex-col items-center md:items-start justify-center">
+                    <p class="font-bold text-mint">Mint Choco Theme Edition</p>
+                    <p class="opacity-80">© 2026/2027 X DKV 2. All rights reserved.</p>
+                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mt-4 bg-mint text-choco px-4 py-2 rounded-xl font-bold shadow hover:bg-mint-light transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-up"></i> Kembali ke Atas
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL BIODATA SISWA -->
+    <div id="biodata-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+        <div class="bg-cream dark:bg-choco-dark max-w-lg w-full rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-mint relative text-choco dark:text-cream animate-in fade-in zoom-in duration-200">
+            <button onclick="closeBiodataModal()" class="absolute top-4 right-4 bg-choco text-mint w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-choco-dark shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-mint text-choco rounded-full flex items-center justify-center font-cursive text-2xl mx-auto mb-2 shadow">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h3 id="modal-nama-lengkap" class="font-cursive text-2xl text-choco dark:text-mint">Nama Siswa</h3>
+                <p id="modal-panggilan" class="text-xs opacity-80 font-semibold">Panggilan</p>
+            </div>
+            
+            <div class="space-y-3 text-xs md:text-sm bg-mint/20 dark:bg-choco/40 p-4 rounded-2xl border border-mint max-h-64 overflow-y-auto">
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">NIS / NISN:</span>
+                    <span id="modal-nis" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Tempat, Tanggal Lahir:</span>
+                    <span id="modal-ttl" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Zodiak:</span>
+                    <span id="modal-zodiak" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Jenis Kelamin:</span>
+                    <span id="modal-gender" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Alamat:</span>
+                    <span id="modal-alamat" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Hobi:</span>
+                    <span id="modal-hobi" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Cita-cita:</span>
+                    <span id="modal-citacita" class="font-bold">-</span>
+                </div>
+                <div class="flex justify-between border-b border-choco/10 pb-1">
+                    <span class="opacity-75">Instagram:</span>
+                    <span id="modal-ig" class="font-bold">-</span>
+                </div>
+                <div class="pt-2">
+                    <span class="opacity-75 block mb-1">Motto Pribadi:</span>
+                    <span id="modal-motto" class="italic font-medium text-choco-dark dark:text-mint-light">"-"</span>
+                </div>
+            </div>
+
+            <!-- Admin Edit Biodata Button inside Modal -->
+            <div id="admin-biodata-edit-btn" class="hidden mt-4">
+                <button onclick="openAdminEditBiodata()" class="w-full bg-choco text-mint font-bold py-2 rounded-xl text-xs shadow hover:bg-choco-dark">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Biodata Siswa Ini (Admin Only)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+        <div class="bg-cream dark:bg-choco-dark max-w-sm w-full rounded-3xl p-6 shadow-2xl border-4 border-mint relative text-choco dark:text-cream">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 bg-choco text-mint w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-choco-dark shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center text-xl mx-auto mb-2 shadow">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="font-cursive text-2xl text-choco dark:text-mint">Admin Login</h3>
+                <p class="text-xs opacity-75">Masukkan password rahasia (7 huruf)</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="admin-password-input" placeholder="•••••••" class="w-full p-3 rounded-xl bg-mint/20 dark:bg-choco text-center text-lg tracking-widest border border-choco/20 focus:outline-none focus:ring-2 focus:ring-mint">
+                <button onclick="verifyAdminPassword()" class="w-full bg-choco hover:bg-choco-dark text-mint font-bold py-3 rounded-xl shadow transition text-xs">
+                    LOGIN SEBAGAI ADMIN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NON-ADMIN RESTRICTION POPUP -->
+    <div id="restricted-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+        <div class="bg-cream dark:bg-choco-dark max-w-sm w-full rounded-3xl p-6 shadow-2xl border-4 border-red-400 relative text-choco dark:text-cream text-center">
+            <button onclick="closeRestrictedModal()" class="absolute top-4 right-4 bg-choco text-mint w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-choco-dark shadow">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-14 h-14 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 shadow">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="font-cursive text-2xl text-red-500 mb-2">KHUSUS ADMIN</h3>
+            <p class="text-xs opacity-80 mb-4">Fitur pengisian dan pengeditan data ini hanya dapat diakses oleh Admin kelas yang telah login.</p>
+            <button onclick="closeRestrictedModal()" class="bg-choco text-mint px-6 py-2 rounded-xl text-xs font-bold shadow">Mengerti</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA SISWA X DKV 2 (35 Siswa sesuai request user) ---
+        // EDIT HERE: Ganti atau tambahkan data siswa sesuai kebutuhan
+        let siswaList = [
+            { id: 1, nama: "ADARA NURFIANSYAH", panggilan: "Adara", nis: "2615037", ttl: "Kampung Tangah, 14 November 2010", zodiak: "Scorpio", gender: "P", alamat: "Taman Kartini Raya 2", hobi: "Menggambar", citacita: "Pengusaha", ig: "@darayadara_", motto: "-" },
+            { id: 2, nama: "ADITYA ALFHARIZ", panggilan: "Adit/Fhariz", nis: "2615038", ttl: "Batam, 16 Januari 2011", zodiak: "Capricorn", gender: "L", alamat: "Kavling Madani", hobi: "Main Game", citacita: "Pengusaha", ig: "@frizzy_4x", motto: "-" },
+            { id: 3, nama: "AISYATUL RAMADANIAH SAMSIR", panggilan: "Syatul", nis: "2615039", ttl: "Batam, 7 September 2010", zodiak: "Virgo", gender: "P", alamat: "Temiang", hobi: "Make Up", citacita: "Pengusaha Butik & MUA", ig: "@apsii.224", motto: "-" },
+            { id: 4, nama: "ANGELYN NATASYA TAMBUNAN", panggilan: "Tasya", nis: "2615040", ttl: "Batam, 27 Mei 2010", zodiak: "Gemini", gender: "P", alamat: "KSB Tiban Mentarau", hobi: "Menggambar dan Badminton", citacita: "Wedding Fotografer/Tokutei Ginau", ig: "@nasya._lynn", motto: "-" },
+            { id: 5, nama: "AVARA MOHANA SEPTEVI ANWAR", panggilan: "Avara", nis: "2615041", ttl: "Makkah, 19 September 2010", zodiak: "Virgo", gender: "P", alamat: "Pondok Pelangi", hobi: "Volly", citacita: "Welder", ig: "@aisy_ah2244", motto: "-" },
+            { id: 6, nama: "ARTIKA SARI DEVI", panggilan: "Tika", nis: "2615042", ttl: "Batam, 2 Agustus 2010", zodiak: "Leo", gender: "P", alamat: "Tanjung Riau", hobi: "Berenang", citacita: "Dokter", ig: "@_theonlyykaa", motto: "-" },
+            { id: 7, nama: "CELLINE", panggilan: "Celline", nis: "2615044", ttl: "Cirebon, 2 Mei 2011", zodiak: "Aquarius", gender: "P", alamat: "Tiban Indah GPI Cendana", hobi: "Menggambar", citacita: "Dokter", ig: "@lxlinn_1", motto: "-" },
+            { id: 8, nama: "DIMAS FIRMANSYAH RAMADHAN", panggilan: "Dimas", nis: "2615046", ttl: "Batam, 29 Agustus 2010", zodiak: "Virgo", gender: "L", alamat: "Tanjung Uma", hobi: "Volly", citacita: "Pengusaha", ig: "@dimasfirmansyah37300gma.com2", motto: "-" },
+            { id: 9, nama: "FATAN RUZAIN", panggilan: "Fatan", nis: "2615047", ttl: "Medan, 17 Juli 2011", zodiak: "Cancer", gender: "L", alamat: "Masyeba Permai 1", hobi: "Menggambar", citacita: "Business Man", ig: "@tan_25741", motto: "-" },
+            { id: 10, nama: "GRACIA LAURA ARDIAN", panggilan: "Gracia", nis: "2615049", ttl: "Batam, 24 Oktober 2010", zodiak: "Scorpio", gender: "P", alamat: "Taman Laguna Indah", hobi: "Menggambar", citacita: "Illustrator Animasi", ig: "@mochiaaww11", motto: "-" },
+            { id: 11, nama: "HENOKH VALENTINO PAREANG", panggilan: "Henokh", nis: "2615050", ttl: "Batam, 12 Februari 2009", zodiak: "Aquarius", gender: "L", alamat: "Tiban V Cendrawasih ", hobi: "Main Game", citacita: "Streamer", ig: "@________your_valen87", motto: "-" },
+            { id: 12, nama: "HIRMA MALINI", panggilan: "Hirma", nis: "2615051", ttl: "Batam, 1 Desember 2011", zodiak: "Sagitarius", gender: "P", alamat: "Kav Madani", hobi: "Menulis", citacita: "Pengusaha", ig: "@h1rm.4", motto: "-" },
+            { id: 13, nama: "JECK LISON", panggilan: "Jeck", nis: "2615052", ttl: "Batam, 26 Juli 2010", zodiak: "Leo", gender: "L", alamat: "Perumahan Tiban Anggrek", hobi: "Menggambar", citacita: "Pengusaha", ig: "@jecie2610", motto: "-" },
+            { id: 14, nama: "LENNI AGUSTINA BR SIANTURI", panggilan: "Lenni", nis: "2615053", ttl: "Pekan Baru, 17 Agustus 2010", zodiak: "Leo", gender: "P", alamat: "Tiban 1", hobi: "Make Up", citacita: "Salon Owner", ig: "@baby_kinds_o", motto: "-" },
+            { id: 15, nama: "LIVI ANGGELIA LIU", panggilan: "Livi", nis: "2615054", ttl: "Batam, 30 Januari 2011", zodiak: "Aquarius", gender: "P", alamat: "Perumahan Sun Beach Palace", hobi: "Menggambar", citacita: "Animator/Illustrator/Fotografi", ig: "@vixera.vinggel_30", motto: "-" },
+            { id: 16, nama: "KYARA RAYSA HENGKENGBALA", panggilan: "Kyara", nis: "2615055", ttl: "Sukaramai, 29 Oktober 2011", zodiak: "Scorpio", gender: "P", alamat: "Tiban Kampung", hobi: "Menggambar", citacita: "Illustrator", ig: "@xxslyvainelnyxx", motto: "-" },
+            { id: 17, nama: "KHAIRANI NABILA PUTERI", panggilan: "Khairani", nis: "2615056", ttl: "Batam, 31 Desember 2009", zodiak: "Capricorn", gender: "P", alamat: "Perumahan Tiban Indah Permai", hobi: "Mendengar Musik", citacita: "Jadi Orang Sukses", ig: "@kkyrni", motto: "-" },
+            { id: 18, nama: "MOHAMMAD AL RAJA BUDIMAN", panggilan: "Raja", nis: "2615057", ttl: "Batam, 16 Januari 2010", zodiak: "Capricorn", gender: "L", alamat: "Komplek Perbengkelan", hobi: "Main Game", citacita: "Pengusaha", ig: "@kudalautya", motto: "-" },
+            { id: 19, nama: "MEDIAN ARYA PANJI SETIAWAN", panggilan: "Median", nis: "2615058", ttl: "Yogyakarta, 29 Mei 2010", zodiak: "Gemini", gender: "L", alamat: "-", hobi: "Main Game", citacita: "Aviation-Related", ig: "@notaryaofficial", motto: "-" },
+            { id: 20, nama: "MARIO ARTHA PUTRA LUMBAN TORUAN", panggilan: "Mario", nis: "2615059", ttl: "Batam, 9 Agustus 2010", zodiak: "Leo", gender: "L", alamat: "GPI Dhalia", hobi: "Nonton Film", citacita: "Pengusaha", ig: "@yooo_19", motto: "-" },
+            { id: 21, nama: "MUHAMMAD RAFI NASUTION", panggilan: "Rafi", nis: "2615060", ttl: "Batam, 16 Februari 2010", zodiak: "Aquarius", gender: "L", alamat: "Tiban Ayu", hobi: "Basket", citacita: "Pengusaha", ig: "@rafinast_dkv", motto: "-" },
+            { id: 22, nama: "MUHAMMAD AZHAR FIRDAUS BIN AMIRUDIN", panggilan: "Azhar", nis: "2615061", ttl: "Batam, 4 November 2010", zodiak: "Scorpio", gender: "L", alamat: "Tanjung Uma", hobi: "Main Game", citacita: "Apa Aja", ig: "@_zhaaarr04", motto: "-" },
+            { id: 23, nama: "MUHAMMAD FARREL FERDIAN", panggilan: "Farrel", nis: "2615062", ttl: "Batam, 6 Oktober 2010", zodiak: "Libra", gender: "L", alamat: "Taman Sari", hobi: "Main Game", citacita: "Art Director/Cinematographer", ig: "@_neverkillyourself", motto: "-" },
+            { id: 24, nama: "NABILA DWI FEBRIANA", panggilan: "Nabila Dwi", nis: "2615063", ttl: "-, 26 Februari 2010", zodiak: "Pisces", gender: "P", alamat: "Tanjung Uma", hobi: "Apa Aja", citacita: "Pengusaha", ig: "@nbiladwfbriana", motto: "-" },
+            { id: 25, nama: "NABILA PUTRI RIZANA", panggilan: "Nabila", nis: "261064", ttl: "Batam, 27 Mei 2011", zodiak: "Gemini", gender: "P", alamat: "Taman Sari", hobi: "Berenang", citacita: "Pengusaha", ig: "@nabil4putrii", motto: "-" },
+            { id: 26, nama: "RAFIDA RAMTIA JOHOR", panggilan: "Rafida", nis: "2615065", ttl: "Malaysia, 23 Mei 2011", zodiak: "Gemini", gender: "P", alamat: "-", hobi: "Memasak", citacita: "Apa Aja Asal Hallal", ig: "@rrfdcy", motto: "-" },
+            { id: 27, nama: "REDNIA SIBURIAN", panggilan: "Rednia", nis: "2615066", ttl: "-, 17 Juni 2010", zodiak: "Gemini", gender: "P", alamat: "-", hobi: "Mendengar Musik", citacita: "Hakim", ig: "@aku_kriminal", motto: "-" },
+            { id: 28, nama: "SEVIRA SUDRAJAT", panggilan: "Sevira", nis: "2615067", ttl: "Jakarta, 20 April 2009", zodiak: "Taurus", gender: "P", alamat: "-", hobi: "Memasak", citacita: "Kerja Di Jepang", ig: "@sfraaasdj._", motto: "-" },
+            { id: 29, nama: "SITI NURASYFA NACHITA PUTRI", panggilan: "Chita", nis: "2615068", ttl: "Cilacap, 3 Februari 2011", zodiak: "Aquarius", gender: "P", alamat: "Pondok Pelangi", hobi: "Menggambar", citacita: "Desainer Busana", ig: "@chichitaa.dkv", motto: "-" },
+            { id: 30, nama: "SYASYA DIANTI HUSODO", panggilan: "Syasya", nis: "2615069", ttl: "Batam, 4 Juli 2011", zodiak: "Cancer", gender: "P", alamat: "Perumahan Akasia Garden", hobi: "Menggambar, Membaca, Menonton, Mendengar Musik", citacita: "Desainer", ig: "@z.csyy", motto: "Peace of mind over everything." },
+            { id: 31, nama: "PAHIRAH AULIA RAMADANI", panggilan: "Pahirah", nis: "2615070", ttl: "Batam, 14 Agustus 2010", zodiak: "Leo", gender: "P", alamat: "-", hobi: "Menggambar", citacita: "Artist/Pelukis", ig: "@par_arua", motto: "-" },
+            { id: 32, nama: "YUSUF PUTRA ABDILLAH SYUKRON", panggilan: "Yusuf", nis: "2615071", ttl: "Cianjur, 10 Agustus 2010", zodiak: "Leo", gender: "L", alamat: "Tiban Lama", hobi: "Mengaji", citacita: "Investor", ig: "@ysfabdllah_", motto: "-" },
+            { id: 33, nama: "MAVI MARMARA", panggilan: "Mavi", nis: "2625112", ttl: "Batam, 24 April 2011", zodiak: "Taurus", gender: "L", alamat: "Taman Sari", hobi: "Olahraga", citacita: "Arsitek", ig: "@mavzxzz", motto: "-" },
+            { id: 34, nama: "NABILLA", panggilan: "Nabilla", nis: "2625113", ttl: "Batam, 25 Mei 2010", zodiak: "Gemini", gender: "P", alamat: "Sungai Harapan", hobi: "Olahraga", citacita: "Pt Preeport", ig: "@ilaaloavvv_", motto: "-" },
+            { id: 35, nama: "SANDYKA AMOS MANIL", panggilan: "Sandyka", nis: "2625114", ttl: "Batam,", zodiak: "-", gender: "L", alamat: "Kav Patam Permai", hobi: "Running", citacita: "Atlet", ig: "@manik.201012", motto: "-" }
+        ];
+
+        // --- STRUKTUR KELAS DATA ---
+        let strukturData = {
+            walas: "Rizka Septialis S.Pd.",
+            ketua: "Mavi Marmara",
+            wakil: "Khairani Nabila Puteri",
+            sekretaris: "1. Syasya Dianti Husodo\n2. Nabila Putri Rizana",
+            bendahara: "1. Avara Mohana Septevi Anwar\n2. Nabila Dwi Febriana",
+            kebersihan: "1. Jeck Lison\n2. Rednia Siburian",
+            keamanan: "1. Kyara Raysa Hengkengbala\n2. Angelyn Natasya Tambunan"
+        };
+
+        // --- JADWAL PELAJARAN DATA ---
+        let jadwalData = {
+            ganjil: {
+                Senin: [
+                    "Jam 1 (07.00 - 07.40): Upacara (Pembina)",
+                    "Jam 2-3 (07.40 - 09.00): PPKn - Pak Oskar",
+                    "Jam 4-6 (09.00 - 11.15): PJOK - Pak Michael-2",
+                    "Jam 7-8 (11.15 - 13.30): SBDY - Pak Beni",
+                    "Jam 9-11 (13.30 - 15.30): Agama - Bu Asdia / Bu Romauli / Pak Muhdi (RAK)"
+                ],
+                Selasa: [
+                    "Jam 1-4 (07.00 - 09.40): MTK - Bu Anah",
+                    "Jam 5-6 (09.55 - 11.15): SI - Bu Lastri",
+                    "Jam 7 (11.15 - 12.00): BK - Bu Dita",
+                    "Jam 8-11 (12.50 - 15.30): BINDO - Bu Aisyah-1"
+                ],
+                Rabu: [
+                    "Jam 1-3 (07.00 - 09.00): SBDY - Pak Beni",
+                    "Jam 4-5 (09.00 - 10.35): BING - Pak Adi S",
+                    "Jam 6-7 (10.35 - 12.00): PPKn - Pak Oskar",
+                    "Jam 8-10 (12.50 - 14.50): PJOK - Pak Michael-2",
+                    "Jam 11 (14.50 - 15.30): Pramuka (Pembina Pramuka)"
+                ],
+                Kamis: [
+                    "Jam 1 (07.00 - 07.40): Senam OR",
+                    "Jam 2-4 (07.40 - 09.40): MTK - Bu Anah",
+                    "Jam 5-7 (09.55 - 12.00): Agama - Bu Asdia / Bu Romauli / Pak Muhdi (RAK)",
+                    "Jam 8-11 (12.50 - 15.30): BING - Pak Adi S"
+                ],
+                Jumat: [
+                    "Jam 1 (07.00 - 07.40): BP (GA)",
+                    "Jam 2-3 (07.40 - 09.00): BING - Pak Adi S",
+                    "Jam 4-7 (09.00 - 12.00): BINDO - Bu Aisyah-1"
+                ]
+            },
+            genap: {
+                Senin: [
+                    "Jam 1 (07.00 - 07.40): Upacara (Pembina)",
+                    "Jam 2-5 (07.40 - 10.35): IPAS - Bu Aqsa",
+                    "Jam 6-8 (10.35 - 13.30): Infor - Pak David",
+                    "Jam 9-11 (13.30 - 15.30): DDPK - Pak Robi"
+                ],
+                Selasa: [
+                    "Jam 1-4 (07.00 - 09.40): Infor - Pak David",
+                    "Jam 5-8 (09.55 - 13.30): IPAS - Bu Aqsa",
+                    "Jam 9-11 (13.30 - 15.30): DDPK - Pak Robi"
+                ],
+                Rabu: [
+                    "Jam 1-4 (07.00 - 09.40): IPAS - Bu Aqsa",
+                    "Jam 5-6 (09.55 - 11.15): KKA - Pak Robi",
+                    "Jam 7-10 (11.15 - 14.50): DDPK - Pak Robi",
+                    "Jam 11 (14.50 - 15.30): Pramuka (Pembina Pramuka)"
+                ],
+                Kamis: [
+                    "Jam 1 (07.00 - 07.40): Senam OR",
+                    "Jam 2-3 (07.40 - 09.00): SI - Bu Lastri",
+                    "Jam 4 (09.00 - 09.40): Walas - Bu Rizka",
+                    "Jam 5-9 (09.55 - 14.10): DDPK - Pak Robi",
+                    "Jam 10-11 (14.10 - 15.30): KKA - Pak Robi"
+                ],
+                Jumat: [
+                    "Jam 1 (07.00 - 07.40): BP (GA)",
+                    "Jam 2-5 (07.40 - 10.35): DDPK - Pak Robi",
+                    "Jam 6-8 (10.35 - 13.30): IPAS - Bu Aqsa"
+                ]
+            }
+        };
+
+        // --- JADWAL PIKET DATA ---
+        let piketData = {
+            Senin: ["Rafi", "Azhar", "Fransiskus", "Aisya", "Pahira", "Lenni", "Khairani"],
+            Selasa: ["Henokh", "Hormat", "Nabila Dwi", "Tika", "Vany", "Adara", "Sandyka"],
+            Rabu: ["Fariz", "Farrel", "Dimas", "Jeck", "Sevira", "Rafida", "Livi", "Kyara"],
+            Kamis: ["Median", "Dika", "Fatan", "Yusuf", "Nabila Putri", "Syasya", "Chita", "Mavi"],
+            Jumat: ["Raja", "Mario", "Avara", "Gracia", "Celline", "Nia", "Tasya", "Nabilla"]
+        };
+
+        // --- UANG KAS & PLAYLIST & ABSEN DATA ---
+        let months = ["Juli", "Agustus", "September", "Oktober", "November", "Desember", "Januari", "Februari", "Maret", "April", "Mei", "Juni"];
+        let currentMonth = "Juli";
+        let uangKasData = {}; // Format: { "Nama Siswa": { "Juli": 20000, "Agustus": 10000, ... } }
+        let playlistData = {}; // Format: { "Nama Siswa": "Judul Lagu" }
+        let absensiData = {}; // Format: { "Nama Siswa": { tanggal: "Hadir" } }
+        let saldoKasTotal = "Rp 760.000";
+
+        let isAdmin = false;
+
+        // --- INITIALIZATION ON LOAD ---
+        window.onload = function() {
+            loadLocalStorage();
+            renderSiswaCard();
+            renderStruktur();
+            renderJadwal('ganjil');
+            renderPiket();
+            renderMonthTabs();
+            renderKasTable();
+            renderAbsenTable();
+            renderPlaylistGrid();
+            populateAdminDropdowns();
+        };
+
+        // --- START WEBSITE FUNCTION ---
+        function enterWebsite() {
+            document.getElementById('start-section').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- RIPPLE CLICK EFFECT ---
+        document.addEventListener('click', function(e) {
+            let circle = document.createElement('div');
+            circle.className = 'ripple bg-mint dark:bg-choco w-12 h-12 absolute z-50';
+            circle.style.left = (e.pageX - 24) + 'px';
+            circle.style.top = (e.pageY - 24) + 'px';
+            document.body.appendChild(circle);
+            setTimeout(() => circle.remove(), 600);
+        });
+
+        // --- DARK / LIGHT MODE TOGGLE ---
+        function toggleDarkMode() {
+            let html = document.documentElement;
+            let icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun';
+            }
+        }
+
+        // --- MOBILE MENU ---
+        function toggleMobileMenu() {
+            let menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- ADMIN AUTHENTICATION ---
+        function openAdminModal() {
+            if (isAdmin) {
+                if (confirm("Ingin keluar dari mode Admin?")) {
+                    isAdmin = false;
+                    document.getElementById('admin-btn-text').innerText = "LOGIN ADMIN";
+                    document.getElementById('admin-btn-status').classList.remove('bg-green-600');
+                    document.getElementById('admin-btn-status').classList.add('bg-choco');
+                    toggleAdminUI(false);
+                    alert("Berhasil keluar dari mode Admin.");
+                }
+            } else {
+                document.getElementById('admin-password-input').value = "";
+                document.getElementById('admin-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function verifyAdminPassword() {
+            let pass = document.getElementById('admin-password-input').value;
+            // Password requested by user: KAMPUNG (7 letters)
+            if (pass === "KAMPUNG") {
+                isAdmin = true;
+                closeAdminModal();
+                document.getElementById('admin-btn-text').innerText = "ADMIN ACTIVE";
+                document.getElementById('admin-btn-status').classList.remove('bg-choco');
+                document.getElementById('admin-btn-status').classList.add('bg-green-600');
+                toggleAdminUI(true);
+                alert("Login Admin Berhasil! Fitur edit sekarang aktif.");
+            } else {
+                alert("Password salah!");
+            }
+        }
+
+        function showRestrictedModal() {
+            if (!isAdmin) {
+                document.getElementById('restricted-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeRestrictedModal() {
+            document.getElementById('restricted-modal').classList.add('hidden');
+        }
+
+        function toggleAdminUI(show) {
+            let adminBoxes = [
+                'admin-saldo-box', 'admin-add-siswa-box', 'admin-struktur-box',
+                'admin-jadwal-box', 'admin-piket-box', 'admin-kas-box',
+                'admin-absen-box', 'admin-playlist-box', 'admin-biodata-edit-btn'
+            ];
+            adminBoxes.forEach(id => {
+                let el = document.getElementById(id);
+                if (el) {
+                    if (show) el.classList.remove('hidden');
+                    else el.classList.add('hidden');
+                }
+            });
+
+            // Show/Hide admin columns in tables
+            let adminCols = document.querySelectorAll('.admin-only-col');
+            adminCols.forEach(col => {
+                if (show) col.classList.remove('hidden');
+                else col.classList.add('hidden');
+            });
+            renderKasTable();
+        }
+
+        // --- RENDER SISWA CARDS ---
+        function renderSiswaCard() {
+            let grid = document.getElementById('siswa-grid');
+            grid.innerHTML = "";
+            siswaList.forEach((s, idx) => {
+                let card = document.createElement('div');
+                card.className = "bg-cream dark:bg-choco-dark rounded-3xl p-6 shadow-xl border-2 border-mint hover:scale-105 transition-all duration-300 relative cursor-pointer flex flex-col justify-between";
+                card.onclick = () => openBiodataModal(s.id);
+                
+                // Ribbon on top of card
+                card.innerHTML = `
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-mint text-choco px-4 py-0.5 rounded-full text-[10px] font-bold shadow-sm border border-choco/20">
+                         🎀
+                    </div>
+                    <div class="mt-2 text-center">
+                        <div class="w-12 h-12 bg-mint/40 text-choco dark:text-mint rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">
+                            ${s.id}
+                        </div>
+                        <h4 class="font-bold text-base text-choco dark:text-mint mb-1">${s.nama}</h4>
+                        <p class="text-xs opacity-75 font-medium mb-3">Panggilan: ${s.panggilan}</p>
+                        <div class="bg-mint/20 dark:bg-choco p-2 rounded-xl text-xs space-y-1">
+                            <div><span class="opacity-75">NIS:</span> ${s.nis}</div>
+                            <div><span class="opacity-75">Gender:</span> ${s.gender === 'P' ? 'Perempuan' : 'Laki-Laki'}</div>
+                        </div>
+                    </div>
+                    ${isAdmin ? `<button onclick="event.stopPropagation(); deleteSiswa(${s.id})" class="mt-4 w-full bg-red-400 text-white text-xs py-1.5 rounded-xl font-bold shadow hover:bg-red-500"><i class="fa-solid fa-trash"></i> Hapus Siswa</button>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+            document.getElementById('total-siswa-count').innerText = siswaList.length;
+        }
+
+        function filterSiswa() {
+            let keyword = document.getElementById('search-siswa').value.toLowerCase();
+            let filtered = siswaList.filter(s => s.nama.toLowerCase().includes(keyword) || s.panggilan.toLowerCase().includes(keyword));
+            let grid = document.getElementById('siswa-grid');
+            grid.innerHTML = "";
+            filtered.forEach(s => {
+                let card = document.createElement('div');
+                card.className = "bg-cream dark:bg-choco-dark rounded-3xl p-6 shadow-xl border-2 border-mint hover:scale-105 transition-all duration-300 relative cursor-pointer flex flex-col justify-between";
+                card.onclick = () => openBiodataModal(s.id);
+                card.innerHTML = `
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-mint text-choco px-4 py-0.5 rounded-full text-[10px] font-bold shadow-sm border border-choco/20">
+                         🎀
+                    </div>
+                    <div class="mt-2 text-center">
+                        <div class="w-12 h-12 bg-mint/40 text-choco dark:text-mint rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">
+                            ${s.id}
+                        </div>
+                        <h4 class="font-bold text-base text-choco dark:text-mint mb-1">${s.nama}</h4>
+                        <p class="text-xs opacity-75 font-medium mb-3">Panggilan: ${s.panggilan}</p>
+                        <div class="bg-mint/20 dark:bg-choco p-2 rounded-xl text-xs space-y-1">
+                            <div><span class="opacity-75">NIS:</span> ${s.nis}</div>
+                            <div><span class="opacity-75">Gender:</span> ${s.gender === 'P' ? 'Perempuan' : 'Laki-Laki'}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- BIODATA MODAL ---
+        let currentSelectedSiswaId = null;
+        function openBiodataModal(id) {
+            currentSelectedSiswaId = id;
+            let s = siswaList.find(x => x.id === id);
+            if (!s) return;
+            document.getElementById('modal-nama-lengkap').innerText = s.nama;
+            document.getElementById('modal-panggilan').innerText = "Nama Panggilan: " + s.panggilan;
+            document.getElementById('modal-nis').innerText = s.nis;
+            document.getElementById('modal-ttl').innerText = s.ttl;
+            document.getElementById('modal-zodiak').innerText = s.zodiak;
+            document.getElementById('modal-gender').innerText = s.gender === 'P' ? 'Perempuan' : 'Laki-Laki';
+            document.getElementById('modal-alamat').innerText = s.alamat;
+            document.getElementById('modal-hobi').innerText = s.hobi;
+            document.getElementById('modal-citacita').innerText = s.citacita;
+            document.getElementById('modal-ig').innerText = s.ig;
+            document.getElementById('modal-motto').innerText = '"' + s.motto + '"';
+
+            document.getElementById('biodata-modal').classList.remove('hidden');
+        }
+
+        function closeBiodataModal() {
+            document.getElementById('biodata-modal').classList.add('hidden');
+        }
+
+        function openAdminEditBiodata() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let s = siswaList.find(x => x.id === currentSelectedSiswaId);
+            if (!s) return;
+            let newNama = prompt("Edit Nama Lengkap:", s.nama);
+            if (newNama !== null) s.nama = newNama;
+            let newNis = prompt("Edit Nis:", s.nis);
+            if (newNis !== null) s.nis = newNis;
+            let newTtl = prompt("Edit Ttl:", s.ttl);
+            if (newTtl !== null) s.ttl = newTtl;
+            let newZodiak = prompt("Edit Zodiak:", s.zodiak);
+            if (newZodiak !== null) s.zodiak = newZodiak;
+            let newGender = prompt("Edit Gender:", s.gender);
+            if (newGender !== null) s.gender = newGender;
+            let newAlamat = prompt("Edit Alamat:", s.alamat);
+            if (newAlamat !== null) s.alamat = newAlamat;
+            let newCitacita = prompt("Edit Citacita:", s.citacita);
+            if (newCitacita !== null) s.citacita = newCitacita;
+            let newIg = prompt("Edit Ig:", s.ig);
+            if (newIg !== null) s.ig = newIg;
+            let newHobi = prompt("Edit Hobi:", s.hobi);
+            if (newHobi !== null) s.hobi = newHobi;
+            let newMotto = prompt("Edit Motto:", s.motto);
+            if (newMotto !== null) s.motto = newMotto;
+
+            saveLocalStorage();
+            renderSiswaCard();
+            openBiodataModal(currentSelectedSiswaId);
+            alert("Biodata berhasil diperbarui!");
+        }
+
+        // --- ADMIN ADD SISWA ---
+        function addNewSiswa() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let nama = document.getElementById('new-nama').value;
+            let panggilan = document.getElementById('new-panggilan').value;
+            let nis = document.getElementById('new-nis').value;
+            let gender = document.getElementById('new-gender').value;
+            let jabatan = document.getElementById('new-jabatan').value;
+
+            if (!nama || !nis) {
+                alert("Nama dan NIS wajib diisi!");
+                return;
+            }
+
+            let newObj = {
+                id: siswaList.length + 1,
+                nama: nama,
+                panggilan: panggilan || nama,
+                nis: nis,
+                ttl: "Batam, 1 Januari 2010",
+                zodiak: "Capricorn",
+                gender: gender,
+                alamat: "Batam",
+                hobi: "Desain",
+                citacita: "Desainer",
+                ig: "@" + panggilan.toLowerCase(),
+                motto: "Semangat selalu."
+            };
+
+            siswaList.push(newObj);
+            saveLocalStorage();
+            renderSiswaCard();
+            populateAdminDropdowns();
+            alert("Siswa baru berhasil ditambahkan!");
+            document.getElementById('new-nama').value = "";
+            document.getElementById('new-panggilan').value = "";
+            document.getElementById('new-nis').value = "";
+        }
+
+        function deleteSiswa(id) {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            if (confirm("Yakin ingin menghapus siswa ini?")) {
+                siswaList = siswaList.filter(s => s.id !== id);
+                saveLocalStorage();
+                renderSiswaCard();
+                populateAdminDropdowns();
+                alert("Siswa berhasil dihapus.");
+            }
+        }
+
+        // --- STRUKTUR KELAS RENDER ---
+        function renderStruktur() {
+            let container = document.getElementById('struktur-container');
+            container.innerHTML = `
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Wali Kelas</h4>
+                    <p class="text-sm font-semibold opacity-90">${strukturData.walas}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-user-tie"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Ketua Kelas</h4>
+                    <p class="text-sm font-semibold opacity-90">${strukturData.ketua}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-user-gear"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Wakil Ketua</h4>
+                    <p class="text-sm font-semibold opacity-90">${strukturData.wakil}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-file-pen"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Sekretaris</h4>
+                    <p class="text-sm font-semibold opacity-90 whitespace-pre-line">${strukturData.sekretaris}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-wallet"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Bendahara</h4>
+                    <p class="text-sm font-semibold opacity-90 whitespace-pre-line">${strukturData.bendahara}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-broom"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Seksi Kebersihan</h4>
+                    <p class="text-sm font-semibold opacity-90 whitespace-pre-line">${strukturData.kebersihan}</p>
+                </div>
+                <div class="bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint text-center md:col-span-2 lg:col-span-3">
+                    <div class="w-12 h-12 bg-mint text-choco rounded-full flex items-center justify-center mx-auto mb-3 font-bold"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4 class="font-bold text-lg mb-1">Seksi Keamanan</h4>
+                    <p class="text-sm font-semibold opacity-90 whitespace-pre-line">${strukturData.keamanan}</p>
+                </div>
+            `;
+        }
+
+        function updateStruktur() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let key = document.getElementById('edit-strukt-id').value;
+            let val = document.getElementById('edit-strukt-val').value;
+            if (!val) {
+                alert("Nilai tidak boleh kosong!");
+                return;
+            }
+            strukturData[key] = val;
+            saveLocalStorage();
+            renderStruktur();
+            alert("Struktur kelas berhasil diperbarui!");
+            document.getElementById('edit-strukt-val').value = "";
+        }
+
+        // --- JADWAL PELAJARAN RENDER ---
+        function switchJadwal(type) {
+            let btnGanjil = document.getElementById('btn-ganjil');
+            let btnGenap = document.getElementById('btn-genap');
+            if (type === 'ganjil') {
+                btnGanjil.className = "px-6 py-2 rounded-xl font-bold bg-choco text-mint shadow transition";
+                btnGenap.className = "px-6 py-2 rounded-xl font-bold bg-mint/40 text-choco dark:text-mint shadow transition";
+                renderJadwal('ganjil');
+            } else {
+                btnGenap.className = "px-6 py-2 rounded-xl font-bold bg-choco text-mint shadow transition";
+                btnGanjil.className = "px-6 py-2 rounded-xl font-bold bg-mint/40 text-choco dark:text-mint shadow transition";
+                renderJadwal('genap');
+            }
+        }
+
+        function renderJadwal(minggu) {
+            let container = document.getElementById('jadwal-container');
+            container.innerHTML = "";
+            let data = jadwalData[minggu];
+            for (let hari in data) {
+                let card = document.createElement('div');
+                card.className = "bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-3";
+                let listHtml = data[hari].map(item => `<li class="text-xs py-1 border-b border-choco/10">${item}</li>`).join('');
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 border-b-2 border-mint pb-2">
+                        <i class="fa-solid fa-calendar-day text-choco dark:text-mint"></i>
+                        <h4 class="font-bold text-lg text-choco dark:text-mint">${hari}</h4>
+                    </div>
+                    <ul class="space-y-1">${listHtml}</ul>
+                `;
+                container.appendChild(card);
+            }
+        }
+
+        function addJadwalMapel() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let minggu = document.getElementById('jadwal-minggu-edit').value;
+            let hari = document.getElementById('jadwal-hari-edit').value;
+            let mapel = document.getElementById('jadwal-mapel-edit').value;
+            if (!mapel) {
+                alert("Ketik mata pelajaran terlebih dahulu!");
+                return;
+            }
+            if (!jadwalData[minggu][hari]) {
+                jadwalData[minggu][hari] = [];
+            }
+            jadwalData[minggu][hari].push(mapel);
+            saveLocalStorage();
+            renderJadwal(minggu);
+            alert("Mata pelajaran berhasil ditambahkan!");
+            document.getElementById('jadwal-mapel-edit').value = "";
+        }
+
+        // --- PIKET RENDER ---
+        function renderPiket() {
+            let container = document.getElementById('piket-container');
+            container.innerHTML = "";
+            for (let hari in piketData) {
+                let card = document.createElement('div');
+                card.className = "bg-cream dark:bg-choco-dark p-6 rounded-3xl shadow-xl border-2 border-mint space-y-3";
+                let listHtml = piketData[hari].map(nama => `<li class="text-xs py-1 border-b border-choco/10 font-medium">• ${nama}</li>`).join('');
+                card.innerHTML = `
+                    <div class="flex items-center gap-2 border-b-2 border-mint pb-2">
+                        <i class="fa-solid fa-broom text-choco dark:text-mint"></i>
+                        <h4 class="font-bold text-base text-choco dark:text-mint">${hari}</h4>
+                    </div>
+                    <ul class="space-y-1">${listHtml}</ul>
+                `;
+                container.appendChild(card);
+            }
+        }
+
+        function addPiketSiswa() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let hari = document.getElementById('piket-hari-edit').value;
+            let nama = document.getElementById('piket-nama-edit').value;
+            if (!nama) {
+                alert("Nama siswa wajib diisi!");
+                return;
+            }
+            piketData[hari].push(nama);
+            saveLocalStorage();
+            renderPiket();
+            alert("Petugas piket berhasil ditambahkan!");
+            document.getElementById('piket-nama-edit').value = "";
+        }
+
+        // --- UANG KAS ---
+        function renderMonthTabs() {
+            let tabs = document.getElementById('month-tabs');
+            tabs.innerHTML = "";
+            months.forEach(m => {
+                let btn = document.createElement('button');
+                btn.className = `px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${m === currentMonth ? 'bg-choco text-mint shadow' : 'bg-mint/30 hover:bg-mint/50'}`;
+                btn.innerText = m;
+                btn.onclick = () => {
+                    currentMonth = m;
+                    renderMonthTabs();
+                    renderKasTable();
+                };
+                tabs.appendChild(btn);
+            });
+        }
+
+        function renderKasTable() {
+            document.getElementById('current-month-title').innerText = "Bulan: " + currentMonth + " (Target: Rp 20.000)";
+            let tbody = document.getElementById('kas-table-body');
+            tbody.innerHTML = "";
+
+            siswaList.forEach((s, idx) => {
+                let bayar = 0;
+                if (uangKasData[s.nama] && uangKasData[s.nama][currentMonth] !== undefined) {
+                    bayar = uangKasData[s.nama][currentMonth];
+                }
+
+                let statusHtml = "";
+                if (bayar >= 20000) {
+                    statusHtml = `<span class="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-xs">LUNAS</span>`;
+                } else if (bayar === 0) {
+                    statusHtml = `<span class="bg-red-100 text-red-700 font-bold px-3 py-1 rounded-full text-xs">BELUM BAYAR</span>`;
+                } else {
+                    let kurang = 20000 - bayar;
+                    statusHtml = `<span class="bg-yellow-100 text-yellow-800 font-bold px-3 py-1 rounded-full text-xs">KURANG RP ${kurang.toLocaleString()}</span>`;
+                }
+
+                let row = document.createElement('tr');
+                row.className = "border-b border-choco/10 hover:bg-mint/10 transition";
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium">${idx + 1}</td>
+                    <td class="py-3 px-4 font-bold">${s.nama}</td>
+                    <td class="py-3 px-4">Rp ${bayar.toLocaleString()}</td>s
+                    <td class="py-3 px-4">${statusHtml}</td>
+                    <td class="py-3 px-4 text-center admin-only-col ${isAdmin ? '' : 'hidden'}">
+                        <button onclick="quickPayKas('${s.nama}', 20000)" class="bg-green-600 text-white px-3 py-1 rounded-xl text-xs font-bold hover:bg-green-700">Lunasin</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterKas() {
+            let keyword = document.getElementById('search-kas').value.toLowerCase();
+            let tbody = document.getElementById('kas-table-body');
+            tbody.innerHTML = "";
+            let filtered = siswaList.filter(s => s.nama.toLowerCase().includes(keyword));
+            filtered.forEach((s, idx) => {
+                let bayar = 0;
+                if (uangKasData[s.nama] && uangKasData[s.nama][currentMonth] !== undefined) {
+                    bayar = uangKasData[s.nama][currentMonth];
+                }
+                let statusHtml = bayar >= 20000 ? `<span class="bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-xs">LUNAS</span>` : (bayar === 0 ? `<span class="bg-red-100 text-red-700 font-bold px-3 py-1 rounded-full text-xs">BELUM BAYAR</span>` : `<span class="bg-yellow-100 text-yellow-800 font-bold px-3 py-1 rounded-full text-xs">KURANG RP ${(20000 - bayar).toLocaleString()}</span>`);
+                
+                let row = document.createElement('tr');
+                row.className = "border-b border-choco/10 hover:bg-mint/10 transition";
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium">${s.id}</td>
+                    <td class="py-3 px-4 font-bold">${s.nama}</td>
+                    <td class="py-3 px-4">Rp ${bayar.toLocaleString()}</td>
+                    <td class="py-3 px-4">${statusHtml}</td>
+                    <td class="py-3 px-4 text-center admin-only-col ${isAdmin ? '' : 'hidden'}">
+                        <button onclick="quickPayKas('${s.nama}', 20000)" class="bg-green-600 text-white px-3 py-1 rounded-xl text-xs font-bold hover:bg-green-700">Lunasin</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateKasData() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let nama = document.getElementById('kas-edit-siswa').value;
+            let bulan = document.getElementById('kas-edit-bulan').value;
+            let nominal = parseInt(document.getElementById('kas-edit-nominal').value);
+
+            if (isNaN(nominal)) {
+                alert("Masukkan nominal angka yang valid!");
+                return;
+            }
+
+            if (!uangKasData[nama]) uangKasData[nama] = {};
+            uangKasData[nama][bulan] = nominal;
+            saveLocalStorage();
+            renderKasTable();
+            alert("Data uang kas berhasil diperbarui!");
+            document.getElementById('kas-edit-nominal').value = "";
+        }
+
+        function quickPayKas(nama, nominal) {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            if (!uangKasData[nama]) uangKasData[nama] = {};
+            uangKasData[nama][currentMonth] = nominal;
+            saveLocalStorage();
+            renderKasTable();
+        }
+
+        function updateSaldoKas() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let val = document.getElementById('input-saldo-kas').value;
+            if (!val) return;
+            saldoKasTotal = val;
+            document.getElementById('display-saldo-kas').innerText = saldoKasTotal;
+            saveLocalStorage();
+            alert("Saldo kas berhasil diperbarui!");
+        }
+
+        // --- ABSENSI ---
+        function renderAbsenTable() {
+            let tbody = document.getElementById('absen-table-body');
+            tbody.innerHTML = "";
+            siswaList.forEach((s, idx) => {
+                let row = document.createElement('tr');
+                row.className = "border-b border-choco/10 hover:bg-mint/10 transition";
+                let statusHariIni = absensiData[s.nama] || "Hadir";
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium">${idx + 1}</td>
+                    <td class="py-3 px-4 font-bold">${s.nama}</td>
+                    <td class="py-3 px-4">
+                        <span class="bg-mint/40 text-choco dark:text-mint px-3 py-1 rounded-full text-xs font-bold">${statusHariIni}</span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterAbsen() {
+            let keyword = document.getElementById('search-absen').value.toLowerCase();
+            let tbody = document.getElementById('absen-table-body');
+            tbody.innerHTML = "";
+            let filtered = siswaList.filter(s => s.nama.toLowerCase().includes(keyword));
+            filtered.forEach((s, idx) => {
+                let row = document.createElement('tr');
+                row.className = "border-b border-choco/10 hover:bg-mint/10 transition";
+                let statusHariIni = absensiData[s.nama] || "Hadir";
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium">${s.id}</td>
+                    <td class="py-3 px-4 font-bold">${s.nama}</td>
+                    <td class="py-3 px-4">
+                        <span class="bg-mint/40 text-choco dark:text-mint px-3 py-1 rounded-full text-xs font-bold">${statusHariIni}</span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateAbsenData() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let nama = document.getElementById('absen-edit-siswa').value;
+            let status = document.getElementById('absen-edit-status').value;
+            absensiData[nama] = status;
+            saveLocalStorage();
+            renderAbsenTable();
+            alert("Absensi berhasil disimpan!");
+        }
+
+        // --- PLAYLIST FAV SONG ---
+        function renderPlaylistGrid() {
+            let grid = document.getElementById('playlist-grid');
+            grid.innerHTML = "";
+            siswaList.forEach((s, idx) => {
+                let song = playlistData[s.nama] || "Lagu Favorit X DKV 2";
+                let card = document.createElement('div');
+                card.className = "bg-mint/20 dark:bg-choco p-4 rounded-2xl border border-choco/20 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-compact-disc text-choco dark:text-mint animate-spin-slow"></i>
+                            <span class="font-bold text-xs opacity-75">No. ${s.id}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-choco dark:text-mint mb-1">${s.nama}</h4>
+                        <p class="text-xs italic text-choco/80 dark:text-cream/80">🎵 "${song}"</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPlaylist() {
+            let keyword = document.getElementById('search-playlist').value.toLowerCase();
+            let grid = document.getElementById('playlist-grid');
+            grid.innerHTML = "";
+            let filtered = siswaList.filter(s => s.nama.toLowerCase().includes(keyword) || (playlistData[s.nama] && playlistData[s.nama].toLowerCase().includes(keyword)));
+            filtered.forEach((s, idx) => {
+                let song = playlistData[s.nama] || "Lagu Favorit X DKV 2";
+                let card = document.createElement('div');
+                card.className = "bg-mint/20 dark:bg-choco p-4 rounded-2xl border border-choco/20 flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-compact-disc text-choco dark:text-mint animate-spin-slow"></i>
+                            <span class="font-bold text-xs opacity-75">No. ${s.id}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-choco dark:text-mint mb-1">${s.nama}</h4>
+                        <p class="text-xs italic text-choco/80 dark:text-cream/80">🎵 "${song}"</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updatePlaylistData() {
+            if (!isAdmin) {
+                showRestrictedModal();
+                return;
+            }
+            let nama = document.getElementById('playlist-edit-siswa').value;
+            let lagu = document.getElementById('playlist-edit-lagu').value;
+            if (!lagu) {
+                alert("Judul lagu wajib diisi!");
+                return;
+            }
+            playlistData[nama] = lagu;
+            saveLocalStorage();
+            renderPlaylistGrid();
+            alert("Lagu favorit berhasil diperbarui!");
+            document.getElementById('playlist-edit-lagu').value = "";
+        }
+
+        // --- ADMIN DROPDOWNS POPULATE ---
+        function populateAdminDropdowns() {
+            let selects = ['kas-edit-siswa', 'absen-edit-siswa', 'playlist-edit-siswa'];
+            selects.forEach(selId => {
+                let sel = document.getElementById(selId);
+                if (sel) {
+                    sel.innerHTML = "";
+                    siswaList.forEach(s => {
+                        let opt = document.createElement('option');
+                        opt.value = s.nama;
+                        opt.innerText = s.nama;
+                        sel.appendChild(opt);
+                    });
+                }
+            });
+
+            // Month dropdown for kas
+            let kasBulanSel = document.getElementById('kas-edit-bulan');
+            if (kasBulanSel) {
+                kasBulanSel.innerHTML = "";
+                months.forEach(m => {
+                    let opt = document.createElement('option');
+                    opt.value = m;
+                    opt.innerText = m;
+                    kasBulanSel.appendChild(opt);
+                });
+            }
+        }
+
+        // --- LOCAL STORAGE PERSISTENCE ---
+        function saveLocalStorage() {
+            localStorage.setItem('dkv2_siswa', JSON.stringify(siswaList));
+            localStorage.setItem('dkv2_struktur', JSON.stringify(strukturData));
+            localStorage.setItem('dkv2_jadwal', JSON.stringify(jadwalData));
+            localStorage.setItem('dkv2_piket', JSON.stringify(piketData));
+            localStorage.setItem('dkv2_uangkas', JSON.stringify(uangKasData));
+            localStorage.setItem('dkv2_playlist', JSON.stringify(playlistData));
+            localStorage.setItem('dkv2_absen', JSON.stringify(absensiData));
+            localStorage.setItem('dkv2_saldokas', saldoKasTotal);
+        }
+
+        function loadLocalStorage() {
+            if (localStorage.getItem('dkv2_siswa')) siswaList = JSON.parse(localStorage.getItem('dkv2_siswa'));
+            if (localStorage.getItem('dkv2_struktur')) strukturData = JSON.parse(localStorage.getItem('dkv2_struktur'));
+            if (localStorage.getItem('dkv2_jadwal')) jadwalData = JSON.parse(localStorage.getItem('dkv2_jadwal'));
+            if (localStorage.getItem('dkv2_piket')) piketData = JSON.parse(localStorage.getItem('dkv2_piket'));
+            if (localStorage.getItem('dkv2_uangkas')) uangKasData = JSON.parse(localStorage.getItem('dkv2_uangkas'));
+            if (localStorage.getItem('dkv2_playlist')) playlistData = JSON.parse(localStorage.getItem('dkv2_playlist'));
+            if (localStorage.getItem('dkv2_absen')) absensiData = JSON.parse(localStorage.getItem('dkv2_absen'));
+            if (localStorage.getItem('dkv2_saldokas')) {
+                saldoKasTotal = localStorage.getItem('dkv2_saldokas');
+                document.getElementById('display-saldo-kas').innerText = saldoKasTotal;
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+            window.addEventListener('DOMContentLoaded', () => {
+            loadLocalStorage();
+        });
+
+    </script>
+</body>
+</html>
