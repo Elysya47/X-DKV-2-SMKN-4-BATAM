@@ -492,7 +492,43 @@
                <button type="submit">Send</button>
             </form>
         </section>
-        <script></script>
+        <script>
+        (function() {
+          const URL_KAS = "https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec";
+
+          async function sinkronKasSheet2() {
+            const tbody = document.getElementById("kas-table-body");
+            if (!tbody) return;
+
+            try {
+              const res = await fetch(URL_KAS);
+              const json = await res.json();
+              if (!json.data || json.data.length <= 1) return;
+
+              const rows = json.data.slice(1).filter(r => r.some(cell => cell !== ""));
+              if (rows.length === 0) return;
+
+              tbody.innerHTML = rows.map((r, i) => {
+                const nama = r[1] || r[0] || "-";
+                const nominal = r[3] || r[2] || "0";
+                const status = r[4] || r[3] || "Belum";
+                return `
+                  <tr class="border-b border-choco/10">
+                    <td class="py-3 px-4">${i + 1}</td>
+                    <td class="py-3 px-4 font-medium">${nama}</td>
+                    <td class="py-3 px-4">Rp ${Number(nominal).toLocaleString("id-ID")}</td>
+                    <td class="py-3 px-4 font-bold">${status}</td>
+                  </tr>
+                `;
+              }).join("");
+            } catch (err) {
+              console.log("Gagal muat kas:", err);
+            }
+          }
+
+          window.addEventListener("DOMContentLoaded", sinkronKasSheet2);
+        })();
+        </script>
 
         <!-- 7. ABSENSI SECTION -->
         <section id="absensi" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
