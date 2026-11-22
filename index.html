@@ -484,40 +484,15 @@
                 </div>
             </div>
             <form method="POST" action="https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec"
->              <input name="NamaSiswa" type="text" placeholder="Nama Siswa" required>
+>              <input type="hidden" name="sheetName" value="Sheet2">
+               <input name="NamaSiswa" type="text" placeholder="Nama Siswa" required>
                <input name="Bulan" type="text" placeholder="Bulan (Cth: November)" required>
                <input name="NominalBayar" type="number" placeholder="Nominal Bayar (Cth: 20000)" required>
                <input name="Status" type="text" placeholder="Status (Lunas / Belum)" required>
                <button type="submit">Send</button>
             </form>
-            <div id="tampilan-sheet2">Memuat data kas...</div>
         </section>
-        <script>
-          const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzGJAI7YBmOHaqoZz8Uh9xOIjA06tyLUxFk1QEJJX5nhhIhcZDbxqJ-jdtG9L-FjiduBw/exec";
-
-          function muatDataSheet2() {
-            fetch(WEBAPP_URL)
-              .then((res) => res.json())
-              .then((hasil) => {
-                const wadah = document.getElementById("tampilan-sheet2");
-                if (hasil.result !== "success" || !hasil.data || hasil.data.length <= 1) {
-                 wadah.innerHTML = "<p>Belum ada data kas di Sheet2.</p>";
-                 return;
-                }
-
-               const barisData = hasil.data.slice(1);
-               wadah.innerHTML = barisData
-                 .map((baris) => `<p>${baris.join(" | ")}</p>`)
-                .join("");
-             })
-             .catch(() => {
-               document.getElementById("tampilan-sheet2").innerHTML =
-                 "<p>Gagal memuat data kas.</p>";
-             });
-         }
-
-         muatDataSheet2();
-       </script>
+        <script></script>
 
         <!-- 7. ABSENSI SECTION -->
         <section id="absensi" class="max-w-7xl mx-auto px-4 py-12 space-y-8">
