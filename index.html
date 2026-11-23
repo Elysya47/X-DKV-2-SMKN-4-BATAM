@@ -1879,117 +1879,135 @@
             function cocokNama(namaWeb, namaSheet) {
                 const a = bersihTeks(namaWeb);
                 const b = bersihTeks(namaSheet);
-                return a && b && (a === b || a.includes(b) || b.includes(a));
+                if (!a || !b) return false;
+                return a === b || a.includes(b) || b.includes(a);
             }
 
             async function ambilSheet(namaSheet) {
-                const res = await fetch(URL_SCRIPT + "?sheet=" + encodeURIComponent(namaSheet));
-                const json = await res.json();
-                return (json && Array.isArray(json.data) && json.data.length > 1) ? json.data.slice(1) : [];
-            }
-
-            // 1. Update Saldo Kas (Sheet1)
-            function terapkanSaldo(rows) {
-                const el = document.getElementById("display-saldo-kas");
-                if (!el || rows.length === 0) return;
-                for (let i = rows.length - 1; i >= 0; i--) {
-                    const val = rows[i][1] !== undefined && rows[i][1] !== "" ? rows[i][1] : rows[i][0];
-                    if (val !== "" && val !== undefined && val !== null) {
-                        const angka = Number(String(val).replace(/[^\d]/g, "") || 0);
-                        el.textContent = "Rp " + angka.toLocaleString("id-ID");
-                        break;
+                try {
+                    const url = URL_SCRIPT + "?sheet=" + encodeURIComponent(namaSheet) + "&_t=" + Date.now();
+                    const res = await fetch(url, {cache: "no-store"});
+                    const json = await res.json();
+                    if (json && Array.isArray(json.data) && json.data.length > 1) {
+                        return json.data.slice(1);
                     }
+                    return [];
+                } catch (err) {
+                    return [];
                 }
             }
 
-            // 2. Update Tabel Kas Asli (Sheet2: Date, NamaSiswa, Bulan, NominalBayar, Status)
+            function terapkanSaldo(rows) {
+                try {
+                    const el = document.getElementById("display-saldo-kas");
+                    if (!el || !rows.length) return;
+                    for (let i = rows.length - 1; i >= 0; i--) {
+                        const val = (rows[i][1] !== undefined && rows[i][1] !== "") ? rows[i][1] : rows[i][0];
+                        if (val !== "" && val !== undefined && val !== null) {
+                            const angka = Number(String(val).replace(/[^\d]/g, "") || 0);
+                            el.textContent = "Rp " + angka.toLocaleString("id-ID");
+                            break;
+                        }
+                    }
+                } catch (err) { }
+            }
+
             function terapkanKas(rows) {
-                const tbody = document.getElementById("kas-table-body");
-                if (!tbody) return;
-                const judul = document.getElementById("current-month-title");
-                const bulanAktif = judul ? bersihTeks(judul.textContent.replace(/bulan\s*:?/i, "")) : "";
+                try {
+                    const tbody = document.getElementById("kas-table-body");
+                    if (!tbody || !rows.length) return;
+                    const judul = document.getElementById("current-month-title");
+                    const bulanAktif = judul ? bersihTeks(judul.textContent.replace(/bulan\s*:?/i, "")) : "";
 
-                Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
-                    const td = tr.querySelectorAll("td");
-                    if (td.length < 4) return;
-                    rows.forEach(r => {
-                        const bulanSheet = bersihTeks(r[2]);
-                        if (bulanAktif && bulanSheet && bulanAktif !== bulanSheet) return;
-                        if (cocokNama(td[1].textContent, r[1])) {
-                            if (r[3] !== "" && r[3] !== undefined) {
-                                const angka = Number(String(r[3]).replace(/[^\d]/g, "") || 0);
-                                td[2].textContent = "Rp " + angka.toLocaleString("id-ID");
+                    Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
+                        const td = tr.querySelectorAll("td");
+                        if (td.length < 4) return;
+                        rows.forEach(r => {
+                            const bulanSheet = bersihTeks(r[2]);
+                            if (bulanAktif && bulanSheet && bulanAktif !== bulanSheet) return;
+                            if (cocokNama(td[1].textContent, r[1])) {
+                                if (r[3] !== "" && r[3] !== undefined && r[3] !== null) {
+                                    const angka = Number(String(r[3]).replace(/[^\d]/g, "") || 0);
+                                    td[2].textContent = "Rp " + angka.toLocaleString("id-ID");
+                                }
+                                if (r[4]) td[3].textContent = String(r[4]).trim();
                             }
-                            if (r[4]) td[3].textContent = String(r[4]).trim();
-                        }
+                        });
                     });
-                });
+                } catch (err) { }
             }
 
-            // 3. Update Tabel Absensi Asli (Sheet3: Date, NamaSiswa, Status)
             function terapkanAbsen(rows) {
-                const tbody = document.getElementById("absen-table-body");
-                if (!tbody) return;
-                Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
-                    const td = tr.querySelectorAll("td");
-                    if (td.length < 3) return;
-                    rows.forEach(r => {
-                        if (cocokNama(td[1].textContent, r[1]) && r[2]) {
-                            td[2].textContent = String(r[2]).trim();
-                        }
+                try {
+                    const tbody = document.getElementById("absen-table-body");
+                    if (!tbody || !rows.length) return;
+                    Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
+                        const td = tr.querySelectorAll("td");
+                        if (td.length < 3) return;
+                        rows.forEach(r => {
+                            if (cocokNama(td[1].textContent, r[1]) && r[2]) {
+                                td[2].textContent = String(r[2]).trim();
+                            }
+                        });
                     });
-                });
+                } catch (err) { }
             }
 
-            // 4. Update Kartu Playlist Asli (Sheet4: Date, NamaSiswa, JudulLagu)
             function terapkanPlaylist(rows) {
-                const grid = document.getElementById("playlist-grid");
-                if (!grid) return;
-                Array.from(grid.children).forEach(card => {
-                    rows.forEach(r => {
-                        if (r[1] && r[2] && cocokNama(card.textContent, r[1])) {
-                            const pList = card.querySelectorAll("p, span, div");
-                            if (pList.length > 0) {
-                                const target = pList[pList.length - 1];
-                                if (!cocokNama(target.textContent, r[1])) {
-                                    target.textContent = String(r[2]).trim();
+                try {
+                    const grid = document.getElementById("playlist-grid");
+                    if (!grid || !rows.length) return;
+                    Array.from(grid.children).forEach(card => {
+                        rows.forEach(r => {
+                            if (r[1] && r[2] && cocokNama(card.textContent, r[1])) {
+                                const pList = card.querySelectorAll("p, span, div");
+                                if (pList.length > 0) {
+                                    const target = pList[pList.length - 1];
+                                    if (!cocokNama(target.textContent, r[1])) {
+                                        target.textContent = String(r[2]).trim();
+                                    }
                                 }
                             }
-                        }
+                        });
                     });
-                });
+                } catch (err) { }
+            }
+
+            let cacheData = {s1: [], s2: [], s3: [], s4: []};
+
+            function terapkanSemuaDariCache() {
+                terapkanSaldo(cacheData.s1);
+                terapkanKas(cacheData.s2);
+                terapkanAbsen(cacheData.s3);
+                terapkanPlaylist(cacheData.s4);
             }
 
             async function sinkronSemua() {
-                try {
-                    const [s1, s2, s3, s4] = await Promise.all([
-                        ambilSheet("Sheet1"),
-                        ambilSheet("Sheet2"),
-                        ambilSheet("Sheet3"),
-                        ambilSheet("Sheet4")
-                    ]);
-
-                    terapkanSaldo(s1);
-                    terapkanKas(s2);
-                    terapkanAbsen(s3);
-                    terapkanPlaylist(s4);
-
-                    ["kas-table-body", "absen-table-body", "playlist-grid"].forEach(id => {
-                        const el = document.getElementById(id);
-                        if (!el) return;
-                        const obs = new MutationObserver(() => {
-                            obs.disconnect();
-                            if (id === "kas-table-body") terapkanKas(s2);
-                            if (id === "absen-table-body") terapkanAbsen(s3);
-                            if (id === "playlist-grid") terapkanPlaylist(s4);
-                            obs.observe(el, {childList: true, subtree: true});
-                        });
-                        obs.observe(el, {childList: true, subtree: true});
-                    });
-                } catch (e) { }
+                const [s1, s2, s3, s4] = await Promise.all([
+                    ambilSheet("Sheet1"),
+                    ambilSheet("Sheet2"),
+                    ambilSheet("Sheet3"),
+                    ambilSheet("Sheet4")
+                ]);
+                cacheData = {s1, s2, s3, s4};
+                terapkanSemuaDariCache();
             }
 
-            window.addEventListener("DOMContentLoaded", sinkronSemua);
+            window.addEventListener("load", function () {
+                sinkronSemua();
+                setInterval(sinkronSemua, 8000);
+
+                ["kas-table-body", "absen-table-body", "playlist-grid"].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const obs = new MutationObserver(() => {
+                        obs.disconnect();
+                        terapkanSemuaDariCache();
+                        obs.observe(el, {childList: true, subtree: true});
+                    });
+                    obs.observe(el, {childList: true, subtree: true});
+                });
+            });
         })();
     </script>
 </body>
