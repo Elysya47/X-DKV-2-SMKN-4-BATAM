@@ -1960,6 +1960,46 @@
                 });
             }
 
+            async function kirimAdminAbsenKeSheets() {
+                const elSiswa = document.getElementById("absen-edit-siswa");
+                const elTgl = document.getElementById("absen-edit-tgl");
+                const elStatus = document.getElementById("absen-edit-status");
+
+                const namaSiswa = elSiswa ? String(elSiswa.value || "").trim() : "";
+                const tanggal = elTgl ? String(elTgl.value || "").trim() : "";
+                const status = elStatus ? String(elStatus.value || "").trim() : "";
+
+                if (!namaSiswa || !status) return;
+
+                const params = new URLSearchParams();
+                params.append("sheetName", "Sheet3");
+                params.append("NamaSiswa", namaSiswa);
+                params.append("Status", status);
+                if (tanggal) {
+                    params.append("Tanggal", tanggal);
+                }
+
+                try {
+                    await fetch(URL_SCRIPT, {
+                        method: "POST",
+                        mode: "no-cors",
+                        body: params
+                    });
+                } catch (e) { }
+            }
+
+            document.addEventListener("click", function (event) {
+                const tombol = event.target.closest("button");
+                if (!tombol) return;
+
+                const diDalamAdminAbsen = tombol.closest("#admin-absen-box");
+                const onclickText = String(tombol.getAttribute("onclick") || "");
+
+                if (diDalamAdminAbsen || onclickText.includes("updateAbsenData")) {
+                    kirimAdminAbsenKeSheets();
+                }
+            });
+
             window.addEventListener("DOMContentLoaded", async function () {
                 const [s1, s2, s3, s4] = await Promise.all([
                     ambilSheet("Sheet1"),
