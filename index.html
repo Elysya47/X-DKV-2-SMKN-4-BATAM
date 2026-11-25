@@ -1892,6 +1892,33 @@
                 }
             }
 
+            async function kirimPost(dataObj) {
+                const params = new URLSearchParams();
+                Object.keys(dataObj).forEach(k => {
+                    const val = dataObj[k];
+                    if (val !== undefined && val !== null && String(val).trim() !== "") {
+                        params.append(k, String(val).trim());
+                    }
+                });
+                try {
+                    await fetch(URL_SCRIPT, {
+                        method: "POST",
+                        mode: "no-cors",
+                        body: params
+                    });
+                } catch (e) {}
+            }
+
+            function ambilNilaiPertama(ids) {
+                for (let i = 0; i < ids.length; i++) {
+                    const el = document.getElementById(ids[i]);
+                    if (el && String(el.value || "").trim() !== "") {
+                        return String(el.value).trim();
+                    }
+                }
+                return "";
+            }
+
             function terapkanSaldo(rows) {
                 const el = document.getElementById("display-saldo-kas");
                 if (!el || !rows.length) return;
@@ -1961,42 +1988,117 @@
             }
 
             async function kirimAdminAbsenKeSheets() {
-                const elSiswa = document.getElementById("absen-edit-siswa");
-                const elTgl = document.getElementById("absen-edit-tgl");
-                const elStatus = document.getElementById("absen-edit-status");
-
-                const namaSiswa = elSiswa ? String(elSiswa.value || "").trim() : "";
-                const tanggal = elTgl ? String(elTgl.value || "").trim() : "";
-                const status = elStatus ? String(elStatus.value || "").trim() : "";
-
+                const namaSiswa = ambilNilaiPertama(["absen-edit-siswa", "edit-absen-siswa", "admin-absen-siswa"]);
+                const tanggal = ambilNilaiPertama(["absen-edit-tgl", "edit-absen-tgl", "admin-absen-tgl"]);
+                const status = ambilNilaiPertama(["absen-edit-status", "edit-absen-status", "admin-absen-status"]);
                 if (!namaSiswa || !status) return;
 
-                const params = new URLSearchParams();
-                params.append("sheetName", "Sheet3");
-                params.append("NamaSiswa", namaSiswa);
-                params.append("Status", status);
-                if (tanggal) {
-                    params.append("Tanggal", tanggal);
-                }
+                await kirimPost({
+                    sheetName: "Sheet3",
+                    NamaSiswa: namaSiswa,
+                    Status: status,
+                    Tanggal: tanggal
+                });
+            }
 
-                try {
-                    await fetch(URL_SCRIPT, {
-                        method: "POST",
-                        mode: "no-cors",
-                        body: params
+            async function kirimAdminKasKeSheets() {
+                const namaSiswa = ambilNilaiPertama(["kas-edit-siswa", "edit-kas-siswa", "admin-kas-siswa", "bayar-siswa"]);
+                const bulan = ambilNilaiPertama(["kas-edit-bulan", "edit-kas-bulan", "admin-kas-bulan", "bayar-bulan"]);
+                const nominal = ambilNilaiPertama(["kas-edit-nominal", "kas-edit-jumlah", "edit-kas-nominal", "admin-kas-nominal", "bayar-nominal"]);
+                const status = ambilNilaiPertama(["kas-edit-status", "edit-kas-status", "admin-kas-status", "bayar-status"]);
+
+                if (namaSiswa && (nominal || status)) {
+                    await kirimPost({
+                        sheetName: "Sheet2",
+                        NamaSiswa: namaSiswa,
+                        Bulan: bulan,
+                        NominalBayar: nominal.replace(/[^\d]/g, ""),
+                        Status: status || (nominal ? "Lunas" : "")
                     });
-                } catch (e) { }
+                }
+            }
+
+            async function kirimAdminSaldoKeSheets() {
+                const saldoInput = ambilNilaiPertama([
+                    "saldo-edit-input",
+                    "edit-saldo-kas",
+                    "admin-saldo-input",
+                    "input-saldo-kas",
+                    "kas-saldo-input"
+                ]);
+                const saldoTampil = !saldoInput && document.getElementById("display-saldo-kas")
+                    ? String(document.getElementById("display-saldo-kas").textContent || "").trim()
+                    : "";
+                const angkaSaldo = (saldoInput || saldoTampil).replace(/[^\d]/g, "");
+                if (!angkaSaldo) return;
+
+                await kirimPost({
+                    sheetName: "Sheet1",
+                    SaldoKas: angkaSaldo,
+                    Saldo: angkaSaldo
+                });
+            }
+
+            async function kirimAdminPlaylistKeSheets() {
+                const namaSiswa = ambilNilaiPertama(["playlist-edit-siswa", "edit-playlist-siswa", "admin-playlist-siswa", "lagu-siswa"]);
+                const judulLagu = ambilNilaiPertama([
+                    "playlist-edit-lagu",
+                    "playlist-edit-judul",
+                    "edit-playlist-lagu",
+                    "edit-playlist-judul",
+                    "admin-playlist-lagu",
+                    "admin-playlist-judul",
+                    "lagu-judul"
+                ]);
+                if (!namaSiswa || !judulLagu) return;
+
+                await kirimPost({
+                    sheetName: "Sheet4",
+                    NamaSiswa: namaSiswa,
+                    JudulLagu: judulLagu
+                });
             }
 
             document.addEventListener("click", function (event) {
                 const tombol = event.target.closest("button");
                 if (!tombol) return;
 
-                const diDalamAdminAbsen = tombol.closest("#admin-absen-box");
-                const onclickText = String(tombol.getAttribute("onclick") || "");
+                const onclickText = String(tombol.getAttribute("onclick") || "").toLowerCase();
+                const teksTombol = bersihTeks(tombol.textContent);
+                const wadah = tombol.closest("div, section, form");
+                const idWadah = wadah ? String(wadah.id || "").toLowerCase() : "";
 
-                if (diDalamAdminAbsen || onclickText.includes("updateAbsenData")) {
+                if (tombol.closest("#admin-absen-box") || onclickText.includes("updateabsendata")) {
                     kirimAdminAbsenKeSheets();
+                    return;
+                }
+
+                if (
+                    onclickText.includes("updatesaldokas") ||
+                    onclickText.includes("saldo") ||
+                    idWadah.includes("saldo") ||
+                    teksTombol.includes("saldo")
+                ) {
+                    kirimAdminSaldoKeSheets();
+                }
+
+                if (
+                    onclickText.includes("updatekasdata") ||
+                    onclickText.includes("kas") ||
+                    idWadah.includes("kas")
+                ) {
+                    kirimAdminKasKeSheets();
+                }
+
+                if (
+                    onclickText.includes("updateplaylistdata") ||
+                    onclickText.includes("playlist") ||
+                    onclickText.includes("lagu") ||
+                    idWadah.includes("playlist") ||
+                    teksTombol.includes("lagu") ||
+                    teksTombol.includes("playlist")
+                ) {
+                    kirimAdminPlaylistKeSheets();
                 }
             });
 
